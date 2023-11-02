@@ -1,7 +1,7 @@
 
 import org.restlet.Component;
 import org.restlet.data.Protocol;
-import org.restlet.resource.ClientResource;
+//import org.restlet.resource.ClientResource;
 
 public class ExampleRestlet {
 
