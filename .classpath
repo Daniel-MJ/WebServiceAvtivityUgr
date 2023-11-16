@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/org.restlet.jar"/>
-	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/mongodb-driver-reactivestreams-4.10.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danie/Documents/Repo/WebServiceAvtivityUgr/lib/mongodb-driver-reactivestreams-4.10.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
