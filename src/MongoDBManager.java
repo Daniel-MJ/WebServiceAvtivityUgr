@@ -14,9 +14,9 @@ public class MongoDBManager {
     private final MongoDatabase database;
     private final MongoCollection<Document> collection;
 
-    public MongoDBManager(String connectionString, String databaseName, String collectionName) {
+    public MongoDBManager(String databaseName, String collectionName) {
         // Crear la conexión a MongoDB
-        this.mongoClient = MongoClients.create(connectionString);
+        this.mongoClient = MongoClients.create("mongodb://localhost:27017");
 
         // Seleccionar la base de datos y la colección
         this.database = mongoClient.getDatabase(databaseName);
