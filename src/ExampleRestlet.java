@@ -13,7 +13,7 @@ public class ExampleRestlet {
 	    component.getServers().add(Protocol.HTTP, 8182);  
 
 	    // Attach the sample application.  
-	    component.getDefaultHost().attach("/firstSteps",  
+	    component.getDefaultHost().attach("/ApiServerWeb",  
 	            new FirstStepsApplication());  
 
 	    // Start the component.  
