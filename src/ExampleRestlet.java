@@ -1,6 +1,7 @@
-
 import org.restlet.Component;
 import org.restlet.data.Protocol;
+
+
 //import org.restlet.resource.ClientResource;
 
 public class ExampleRestlet {
@@ -13,9 +14,7 @@ public class ExampleRestlet {
 	    component.getServers().add(Protocol.HTTP, 8182);  
 
 	    // Attach the sample application.  
-	    component.getDefaultHost().attach("/ApiServerWeb",  
-	            new FirstStepsApplication());  
-
+	    component.getDefaultHost().attach("/ApiServerWeb", new FirstStepsApplication());
 	    // Start the component.  
 	    component.start();  
 		//new ClientResource("http://restlet.com").get().write(System.out);
