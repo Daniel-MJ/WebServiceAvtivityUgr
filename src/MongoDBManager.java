@@ -3,6 +3,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
+
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -25,7 +27,8 @@ public class MongoDBManager {
 
     public List<Document> getAllDocuments() {
         // Obtener todos los documentos en la colección
-        return collection.find().into(new ArrayList<>());
+        //return collection.find().pretty().into(new ArrayList<>());
+        return collection.find().projection(Projections.excludeId()).into(new ArrayList<>())
     }
 
     public Document getDocumentById(String id) {
