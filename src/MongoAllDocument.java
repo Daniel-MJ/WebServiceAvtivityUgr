@@ -3,6 +3,9 @@ import java.util.List;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 import org.bson.Document;
+import org.restlet.representation.Representation;
+import org.restlet.representation.StringRepresentation;
+
 
 /**
  * Resource which has only one representation.
@@ -10,7 +13,7 @@ import org.bson.Document;
 public class MongoAllDocument extends ServerResource {
 
     @Get("json")
-    public List<String> getAllDocumentsAsJson() {
+    public Representation getAllDocumentsAsJson() {
         // Obtener el parámetro "miBasedeDatos" de la solicitud
         String databaseName = getQueryValue("miBasedeDatos");
         
@@ -27,10 +30,14 @@ public class MongoAllDocument extends ServerResource {
         List<String> allDocumentsJson = new ArrayList<>();
 
         for (Document document : allDocuments) {
-            String json = document.toString();
+            String json = document.toJson();
             allDocumentsJson.add(json);
         }
 
-        return allDocumentsJson;
+        // Convierte la lista de cadenas JSON a una sola cadena JSON
+        String jsonResponse = "[" + String.join(",", allDocumentsJson) + "]";
+
+        // Retorna una representación de la cadena JSON
+        return new StringRepresentation(jsonResponse);
     }
 }
