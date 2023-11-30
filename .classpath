@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/mongodb-driver-sync-4.10.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/mongodb-driver-core-4.10.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/bson-4.10.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/jackson-databind-2.15.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
