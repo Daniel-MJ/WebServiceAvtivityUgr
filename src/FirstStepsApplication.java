@@ -3,8 +3,10 @@ import java.util.HashSet;
 
 import org.restlet.Application;
 import org.restlet.Restlet;
+import org.restlet.engine.application.CorsFilter;
 import org.restlet.routing.Router;
 import org.restlet.service.CorsService;
+
 
 public class FirstStepsApplication extends Application {
 
@@ -22,13 +24,21 @@ public class FirstStepsApplication extends Application {
         // Configurar CorsService para permitir solicitudes desde http://localhost:4200
         CorsService corsService = new CorsService();
         corsService.setAllowingAllRequestedHeaders(true);
-        corsService.setAllowedOrigins(new HashSet<>(Arrays.asList("http://localhost:4200")));
-        corsService.setAllowedCredentials(true);
-        getServices().add(corsService);
 
+        corsService.setAllowedCredentials(true);
+
+        // Crear el filtro CorsFilter y adjuntarlo al enrutador
+        CorsFilter corsFilter = new CorsFilter(getContext(), router);
+        corsFilter.setNext(router);
+        corsFilter.setAllowingAllRequestedHeaders(true);
+        corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
+        corsFilter.setAllowedCredentials(true);
+        //corsFilter.setCorsService(corsService);
+        
+        return corsFilter;
         
 
-        return router;
+        //return router;
     }
 
 }
