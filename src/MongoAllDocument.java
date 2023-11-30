@@ -26,7 +26,7 @@ public class MongoAllDocument extends ServerResource {
 
         // Convierte los documentos BSON a JSON
         List<String> allDocumentsJson = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
+        //ObjectMapper objectMapper = new ObjectMapper();
 
         for (Document document : allDocuments) {
             String json = document.toJson();
