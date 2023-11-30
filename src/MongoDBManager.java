@@ -28,7 +28,7 @@ public class MongoDBManager {
     public List<Document> getAllDocuments() {
         // Obtener todos los documentos en la colección
         //return collection.find().pretty().into(new ArrayList<>());
-        return collection.find().projection(Projections.excludeId()).into(new ArrayList<>())
+        return collection.find().projection(Projections.excludeId()).into(new ArrayList<>());
     }
 
     public Document getDocumentById(String id) {
