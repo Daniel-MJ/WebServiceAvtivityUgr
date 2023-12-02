@@ -5,7 +5,7 @@ import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.engine.application.CorsFilter;
 import org.restlet.routing.Router;
-import org.restlet.service.CorsService;
+//import org.restlet.service.CorsService;
 
 
 public class FirstStepsApplication extends Application {
@@ -22,10 +22,10 @@ public class FirstStepsApplication extends Application {
         router.attach("/mongodb", MongoAllDocument.class);
 
         // Configurar CorsService para permitir solicitudes desde http://localhost:4200
-        CorsService corsService = new CorsService();
-        corsService.setAllowingAllRequestedHeaders(true);
+        //CorsService corsService = new CorsService();
+        //corsService.setAllowingAllRequestedHeaders(true);
 
-        corsService.setAllowedCredentials(true);
+        //corsService.setAllowedCredentials(true);
 
         // Crear el filtro CorsFilter y adjuntarlo al enrutador
         CorsFilter corsFilter = new CorsFilter(getContext(), router);
@@ -33,7 +33,7 @@ public class FirstStepsApplication extends Application {
         corsFilter.setAllowingAllRequestedHeaders(true);
         corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
         corsFilter.setAllowedCredentials(true);
-        //corsFilter.setCorsService(corsService);
+
         
         return corsFilter;
         
