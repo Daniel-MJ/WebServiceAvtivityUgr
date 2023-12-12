@@ -20,6 +20,7 @@ public class FirstStepsApplication extends Application {
 
         // Defines only one route
         router.attach("/mongodb", MongoAllDocument.class);
+        router.attach("/searchActivities", SearchForParameters.class);
 
         // Configurar CorsService para permitir solicitudes desde http://localhost:4200
         //CorsService corsService = new CorsService();
