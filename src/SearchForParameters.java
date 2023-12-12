@@ -11,7 +11,7 @@ public class SearchForParameters extends ServerResource {
     public String handleGetRequest() {
         String path = getReference().getPath();
         switch (path) {
-            case "/ruta1":
+            case "/forDate":
                 String fechaInicioParam = getQueryValue("fechaInicio");
                 String fechaFinalParam = getQueryValue("fechaFinal");
 
