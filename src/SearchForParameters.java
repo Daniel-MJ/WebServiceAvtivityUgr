@@ -33,7 +33,8 @@ public class SearchForParameters extends ServerResource {
                     return "Formato de fecha no válido";
                 }
             case "/ruta2":
-                return metodoRuta2();
+                //return metodoRuta2();
+                return "llegando hasta rutas dos";
             // Agrega más casos según tus necesidades
             default:
                 return "Ruta no manejada";
