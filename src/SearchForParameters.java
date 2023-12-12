@@ -32,6 +32,8 @@ public class SearchForParameters extends ServerResource {
                 } catch (ParseException e) {
                     return "Formato de fecha no válido";
                 }
+                return "Manejando /forDate";
+
             case "/ruta2":
                 //return metodoRuta2();
                 return "llegando hasta rutas dos";
