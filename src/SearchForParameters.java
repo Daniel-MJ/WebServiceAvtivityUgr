@@ -40,11 +40,6 @@ public class SearchForParameters extends ServerResource {
         }
     }
 
-    private String metodoRuta1() {
-        // Lógica para manejar la ruta1
-        return "Manejando ruta1";
-    }
-
     private String metodoRuta2() {
         // Lógica para manejar la ruta2
         return "Manejando ruta2";
