@@ -3,9 +3,11 @@ import java.util.HashSet;
 
 import org.restlet.Application;
 import org.restlet.Restlet;
+import org.restlet.data.ChallengeScheme;
 import org.restlet.engine.application.CorsFilter;
 import org.restlet.routing.Router;
 //import org.restlet.service.CorsService;
+import org.restlet.security.ChallengeAuthenticator;
 
 
 public class FirstStepsApplication extends Application {
@@ -22,6 +24,14 @@ public class FirstStepsApplication extends Application {
         router.attach("/mongodb", MongoAllDocument.class);
         router.attach("/searchActivities", SearchForParameters.class);
 
+        
+        // Crear el filtro de autenticación ChallengeAuthenticator
+        ChallengeAuthenticator authenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Área protegida de la aplicación");
+        authenticator.setVerifier(new VerificadorUsuarios());
+        authenticator.setNext(router);
+
+        return authenticator;
+
         // Configurar CorsService para permitir solicitudes desde http://localhost:4200
         //CorsService corsService = new CorsService();
         //corsService.setAllowingAllRequestedHeaders(true);
@@ -29,14 +39,14 @@ public class FirstStepsApplication extends Application {
         //corsService.setAllowedCredentials(true);
 
         // Crear el filtro CorsFilter y adjuntarlo al enrutador
-        CorsFilter corsFilter = new CorsFilter(getContext(), router);
+        /*CorsFilter corsFilter = new CorsFilter(getContext(), router);
         corsFilter.setNext(router);
         corsFilter.setAllowingAllRequestedHeaders(true);
         corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
-        corsFilter.setAllowedCredentials(true);
+        corsFilter.setAllowedCredentials(true);*/
 
         
-        return corsFilter;
+        //return corsFilter;
         
 
         //return router;
