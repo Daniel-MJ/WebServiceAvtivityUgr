@@ -15,8 +15,8 @@ public class SearchForParameters extends ServerResource {
 
     @Get("json")
     public Representation handleGetRequest() {
-        String path = getReference().getPath();
-        System.out.println("Solicitud recibida para la ruta: " + path);
+        //String path = getReference().getPath();
+        //System.out.println("Solicitud recibida para la ruta: " + path);
         String metodo = getQueryValue("METODO");
         switch (metodo) {
             case "forDate":

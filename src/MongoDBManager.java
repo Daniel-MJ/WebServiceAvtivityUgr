@@ -23,8 +23,16 @@ public class MongoDBManager {
 
     public MongoDBManager(String databaseName, String collectionName) {
 
-        String username = "ReadActivities";
-        String password = "pepito34";
+        //*********************************
+        //Usuarios para leer Documnetos de las colecciones de base_prueba_v0
+        String username = "insertUser";
+        String password = "Polo67";
+
+        
+        //*********************************
+        //Usuarios para leer Documnetos de las colecciones de base_prueba_v0
+        //String username = "ReadActivities";
+        //String password = "pepito34";
 
          // Crear las credenciales
          MongoCredential credential = MongoCredential.createCredential(username, databaseName, password.toCharArray());

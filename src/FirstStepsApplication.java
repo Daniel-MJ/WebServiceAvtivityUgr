@@ -1,10 +1,10 @@
-import java.util.Arrays;
-import java.util.HashSet;
+//import java.util.Arrays;
+//import java.util.HashSet;
 
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.data.ChallengeScheme;
-import org.restlet.engine.application.CorsFilter;
+//import org.restlet.engine.application.CorsFilter;
 import org.restlet.routing.Router;
 //import org.restlet.service.CorsService;
 import org.restlet.security.ChallengeAuthenticator;
@@ -23,6 +23,7 @@ public class FirstStepsApplication extends Application {
         // Defines only one route
         router.attach("/mongodb", MongoAllDocument.class);
         router.attach("/searchActivities", SearchForParameters.class);
+        router.attach("/createUser", CreateNewUser.class);
 
         
         // Crear el filtro de autenticación ChallengeAuthenticator
@@ -31,6 +32,11 @@ public class FirstStepsApplication extends Application {
         authenticator.setNext(router);
 
         return authenticator;
+
+
+    }
+
+}
 
         // Configurar CorsService para permitir solicitudes desde http://localhost:4200
         //CorsService corsService = new CorsService();
@@ -50,6 +56,3 @@ public class FirstStepsApplication extends Application {
         
 
         //return router;
-    }
-
-}
