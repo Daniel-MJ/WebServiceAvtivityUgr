@@ -14,8 +14,5 @@
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/jackson-databind-2.15.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/jackson-core-2.15.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/jackson-annotations-2.15.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/slf4j-api-2.0.9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/logback-classic-1.4.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/org.restlet.ext.simple.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

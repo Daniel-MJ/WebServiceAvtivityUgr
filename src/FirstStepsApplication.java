@@ -1,10 +1,10 @@
-//import java.util.Arrays;
-//import java.util.HashSet;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.data.ChallengeScheme;
-//import org.restlet.engine.application.CorsFilter;
+import org.restlet.engine.application.CorsFilter;
 import org.restlet.routing.Router;
 //import org.restlet.service.CorsService;
 import org.restlet.security.ChallengeAuthenticator;
@@ -31,7 +31,17 @@ public class FirstStepsApplication extends Application {
         authenticator.setVerifier(new VerificadorUsuarios());
         authenticator.setNext(router);
 
-        return authenticator;
+        // Crear el filtro CorsFilter y adjuntarlo al enrutador
+        CorsFilter corsFilter = new CorsFilter(getContext(), authenticator);
+        corsFilter.setNext(router);
+        corsFilter.setAllowingAllRequestedHeaders(true);
+        corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
+        corsFilter.setAllowedCredentials(true);
+
+        
+        return corsFilter;
+
+        //return authenticator;
 
 
     }
@@ -45,7 +55,7 @@ public class FirstStepsApplication extends Application {
         //corsService.setAllowedCredentials(true);
 
         // Crear el filtro CorsFilter y adjuntarlo al enrutador
-        /*CorsFilter corsFilter = new CorsFilter(getContext(), router);
+        /*CorsFilter corsFilter = new CorsFilter(getContext(), authenticator);
         corsFilter.setNext(router);
         corsFilter.setAllowingAllRequestedHeaders(true);
         corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
