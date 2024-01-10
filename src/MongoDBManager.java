@@ -24,7 +24,7 @@ public class MongoDBManager {
     public MongoDBManager(String databaseName, String collectionName) {
 
         //*********************************
-        //Usuarios para leer Documnetos de las colecciones de base_prueba_v0
+        //Usuarios para crear y leer Documnetos de las colecciones de base_prueba_v0
         String username = "insertUser";
         String password = "Polo67";
 
@@ -71,14 +71,14 @@ public class MongoDBManager {
         collection.insertOne(document);
     }
 
-    public void updateDocument(String id, Document updatedDocument) {
+    public void updateDocumentActivities(String titulo, Document updatedDocument) {
         // Actualizar un documento existente por ID
-        collection.replaceOne(Filters.eq("_id", id), updatedDocument);
+        collection.replaceOne(Filters.eq("titulo", titulo), updatedDocument);
     }
 
-    public void deleteDocument(String id) {
+    public void deleteDocumentActivities(String titulo) {
         // Eliminar un documento por ID
-        collection.deleteOne(Filters.eq("_id", id));
+        collection.deleteOne(Filters.eq("titulo", titulo));
     }
 
     public void closeConnection() {

@@ -24,24 +24,26 @@ public class FirstStepsApplication extends Application {
         router.attach("/mongodb", MongoAllDocument.class);
         router.attach("/searchActivities", SearchForParameters.class);
         router.attach("/createUser", CreateNewUser.class);
-
-        
-        // Crear el filtro de autenticación ChallengeAuthenticator
-        ChallengeAuthenticator authenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Área protegida de la aplicación");
-        authenticator.setVerifier(new VerificadorUsuarios());
-        authenticator.setNext(router);
+        router.attach("/manageActivities", ManageActivities.class);
 
         // Crear el filtro CorsFilter y adjuntarlo al enrutador
-        CorsFilter corsFilter = new CorsFilter(getContext(), authenticator);
+        CorsFilter corsFilter = new CorsFilter(getContext(), router);
         corsFilter.setNext(router);
         corsFilter.setAllowingAllRequestedHeaders(true);
         corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
         corsFilter.setAllowedCredentials(true);
+        
+        // Crear el filtro de autenticación ChallengeAuthenticator
+        ChallengeAuthenticator authenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Área protegida de la aplicación");
+        authenticator.setVerifier(new VerificadorUsuarios());
+        authenticator.setNext(corsFilter);
+
+
 
         
-        return corsFilter;
+        //return corsFilter;
 
-        //return authenticator;
+        return authenticator;
 
 
     }
