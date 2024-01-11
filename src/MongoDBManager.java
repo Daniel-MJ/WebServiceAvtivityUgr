@@ -1,6 +1,8 @@
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.MongoException;
 
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoClient;
@@ -8,8 +10,10 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
-
+import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,8 +81,19 @@ public class MongoDBManager {
     }
 
     public void deleteDocumentActivities(String titulo) {
-        // Eliminar un documento por ID
-        collection.deleteOne(Filters.eq("titulo", titulo));
+        System.out.println("TITULO: " + titulo);
+        Bson query = eq("titulo", titulo);
+        Document document = collection.find(query).first();
+        ObjectId documentId = document.getObjectId("_id");
+        try {
+            Bson query1= eq("_id", documentId);
+            // Eliminar un documento por ID
+            DeleteResult result =collection.deleteOne(query1);
+        
+            System.out.println("Deleted document count: " + result.getDeletedCount());
+        } catch (MongoException me) {
+            System.err.println("Unable to delete due to an error: " + me);
+        }
     }
 
     public void closeConnection() {

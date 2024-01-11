@@ -4,29 +4,12 @@ import org.restlet.resource.Delete;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
+
+import com.mongodb.MongoException;
+
 import org.bson.Document;
 
 public class ManageActivities extends ServerResource {
-
-    // Método principal para manejar la solicitud
-
-    protected Representation handleRequest() {
-        // Obtener el valor del parámetro "METODO" de la consulta
-        String metodo = getQueryValue("METODO");
-
-        // Utilizar un switch para determinar la acción en función del valor de "METODO"
-        switch (metodo) {
-            case "AGREGAR":
-                return agregarNuevaActividad(getRequestEntity());
-            case "ACTUALIZAR":
-                return actualizarActividadPorTitulo(getRequestEntity());
-            case "ELIMINAR":
-                return eliminarActividadPorTitulo(getQueryValue("titulo"));
-            default:
-                // Manejar caso por defecto o error
-                return null;
-        }
-    }
 
     private final MongoDBManager mongoDBManager  = new MongoDBManager("base_prueba_v0", "Actividades");
     
@@ -69,13 +52,15 @@ public class ManageActivities extends ServerResource {
     }
 
     @Delete("json")
-    public StringRepresentation eliminarActividadPorTitulo(String titulo) {
+    public StringRepresentation eliminarActividadPorTitulo() {
         // Eliminar la actividad por su título
         try {
+            String titulo = getQueryValue("titulo");
+            
             mongoDBManager.deleteDocumentActivities(titulo);
+            
             return new StringRepresentation ("Actividad eliminada con éxito");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (MongoException e) {
             return new StringRepresentation ("Error al eliminar la actividad");
         }
     }
