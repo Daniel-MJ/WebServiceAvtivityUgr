@@ -1,4 +1,8 @@
+import org.restlet.Request;
 import org.restlet.security.MapVerifier;
+import org.restlet.security.Verifier;
+import org.restlet.data.Method;
+import org.bson.Document;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,13 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bson.Document;
 public class VerificadorUsuarios extends MapVerifier {
 
     private Map<String, String> saltMap = new HashMap<>();
 
     public VerificadorUsuarios() {
-
         // Obtener las credenciales desde la base de datos y almacenarlas en getLocalSecrets
         cargarCredencialesDesdeMongo();
 
@@ -47,9 +49,15 @@ public class VerificadorUsuarios extends MapVerifier {
         }
     }
 
-    // Verificar la contraseña considerando la sal
+      // Verificar la contraseña considerando la sal
     @Override
     public int verify(String identifier, char[] secret) {
+        System.out.println("TIPO DE SOLICITUD -->"  + Request.getCurrent().getMethod());
+        // Excluir OPTIONS de la verificación 
+        if (Method.OPTIONS.equals(Request.getCurrent().getMethod())) {
+            return Verifier.RESULT_VALID;
+        }
+
         // Obtener la sal correspondiente al usuario
         String salt = saltMap.get(identifier);
         if (salt != null) {
@@ -64,6 +72,8 @@ public class VerificadorUsuarios extends MapVerifier {
 
         return RESULT_INVALID;
     }
+
+
 
     private String hashPasswordWithSalt(String password, String salt) {
         try {

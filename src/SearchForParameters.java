@@ -9,7 +9,9 @@ import org.bson.Document;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
+import org.restlet.resource.Options;
 import org.restlet.resource.ServerResource;
+import org.restlet.data.Status;
 
 public class SearchForParameters extends ServerResource {
 
@@ -107,6 +109,15 @@ public class SearchForParameters extends ServerResource {
                 return new StringRepresentation("Ruta no manejada" + metodo);
         }
         //return "Hello, World!" + path;
+    }
+
+    @Options
+    public void handleOptions(){
+        getResponse().getHeaders().add("Access-Control-Allow-Origin", "*");
+        getResponse().getHeaders().add("Access-Control-Allow-Headers", "authorization");
+        getResponse().getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        getResponse().getHeaders().add("Access-Control-Allow-Credentials", "true");
+        getResponse().setStatus(Status.SUCCESS_OK);
     }
 
     private List<Document> buscarActividadesPorFecha(Date fechaInicio, Date fechaFinal) {
