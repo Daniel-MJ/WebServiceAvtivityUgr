@@ -118,17 +118,5 @@ public class FirstStepsApplication extends Application {
         // corsFilter.setDefaultAllowedMethods(new HashSet<>(Arrays.asList(Method.OPTIONS,Method.GET)));
         // corsFilter.setSkippingResourceForCorsOptions(true);
         // corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
-
-        // // Crear el filtro CorsFilter y adjuntarlo al enrutador
-        // CorsFilter corsFilter = new CorsFilter(getContext(), authenticator);
-        // corsFilter.setNext(router);
-        // corsFilter.setAllowingAllRequestedHeaders(true);
-        // corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
-        // corsFilter.setAllowedCredentials(true);
-
         
         //return corsFilter;
-        
-
-        //return router;
-
