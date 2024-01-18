@@ -1,0 +1,24 @@
+import org.restlet.routing.Filter;
+import org.restlet.data.Method;
+import org.restlet.data.Status;
+import org.restlet.representation.EmptyRepresentation;
+import org.restlet.Request;
+import org.restlet.Response;
+
+public class CorsFilter extends Filter {
+
+    @Override
+    protected int beforeHandle(Request request, Response response) {
+        System.out.println("PASO POR EL FILTRO CORS");
+        if (Method.OPTIONS.equals(request.getMethod())) {
+            // Preflight request. Reply successfully:
+            response.setStatus(Status.SUCCESS_OK);
+            response.setEntity(new EmptyRepresentation());
+            return Filter.STOP;
+        }
+
+        // Allow the request to be handled by the target ServerResource or Filter
+        return Filter.CONTINUE;
+    }
+} 
+

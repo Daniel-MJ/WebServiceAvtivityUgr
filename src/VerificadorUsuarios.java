@@ -16,6 +16,10 @@ public class VerificadorUsuarios extends MapVerifier {
     private Map<String, String> saltMap = new HashMap<>();
 
     public VerificadorUsuarios() {
+        if(Request.getCurrent() != null){
+            System.out.println("TIPO DE SOLICITUD -->"  + Request.getCurrent().getMethod());
+        }
+        System.out.println("PASA POR VERIFICADOR.");
         // Obtener las credenciales desde la base de datos y almacenarlas en getLocalSecrets
         cargarCredencialesDesdeMongo();
 
@@ -52,7 +56,7 @@ public class VerificadorUsuarios extends MapVerifier {
       // Verificar la contraseña considerando la sal
     @Override
     public int verify(String identifier, char[] secret) {
-        System.out.println("TIPO DE SOLICITUD -->"  + Request.getCurrent().getMethod());
+        
         // Excluir OPTIONS de la verificación 
         if (Method.OPTIONS.equals(Request.getCurrent().getMethod())) {
             return Verifier.RESULT_VALID;
