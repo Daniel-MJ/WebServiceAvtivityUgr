@@ -111,15 +111,6 @@ public class SearchForParameters extends ServerResource {
         //return "Hello, World!" + path;
     }
 
-    @Options
-    public void handleOptions(){
-        getResponse().getHeaders().add("Access-Control-Allow-Origin", "*");
-        getResponse().getHeaders().add("Access-Control-Allow-Headers", "authorization");
-        getResponse().getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        getResponse().getHeaders().add("Access-Control-Allow-Credentials", "true");
-        getResponse().setStatus(Status.SUCCESS_OK);
-    }
-
     private List<Document> buscarActividadesPorFecha(Date fechaInicio, Date fechaFinal) {
         // Realizar la búsqueda en la colección de MongoDB
         MongoDBManager connector = new MongoDBManager("base_prueba_v0", "Actividades");

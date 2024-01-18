@@ -1,4 +1,6 @@
 
+import java.util.HashSet;
+
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.data.ChallengeScheme;
@@ -10,6 +12,7 @@ import org.restlet.engine.header.HeaderConstants;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Header;
+import org.restlet.data.Method;
 
 
 
@@ -31,22 +34,28 @@ public class FirstStepsApplication extends Application {
                 // Request headers
 
                 Series<Header> requestHeaders = (Series<Header>) request.getAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
-                String requestOrigin = requestHeaders.getFirstValue("Origin", false, "*");
-                String rh = requestHeaders.getFirstValue("Access-Control-Request-Headers", false, "*");
+                String requestOrigin = requestHeaders.getFirstValue("Origin", false, "http://localhost:4200");
+                String rh = requestHeaders.getFirstValue("Access-Control-Request-Headers", false, "http://localhost:4200");
 
                 // Set CORS headers in response
-
-                responseHeaders.set("Access-Control-Expose-Headers","Authorization, Link");
-                responseHeaders.set("Access-Control-Allow-Credentials", "true");
-                responseHeaders.set("Access-Control-Allow-Methods","GET,POST,PUT,DELETE");
-                responseHeaders.set("Access-Control-Allow-Origin", requestOrigin);
-                responseHeaders.set("Access-Control-Allow-Headers", rh);
-
                 // Set response headers
+                HashSet<Method> methodHashSet = new HashSet<>();
+                methodHashSet.add(Method.GET);
+                methodHashSet.add(Method.POST);
+                methodHashSet.add(Method.PUT);
+                methodHashSet.add(Method.DELETE);
+                
+                response.setAccessControlAllowCredentials(true);
+                response.setAccessControlAllowMethods(methodHashSet);
+                response.setAccessControlAllowOrigin(requestOrigin);
+                response.setAccessControlAllowOrigin(rh);
 
-                response.getAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS,
-                    responseHeaders);
-
+                java.util.Set<String> allowedHeaders = new HashSet<>();
+                allowedHeaders.add("Content-Type");
+                allowedHeaders.add("Authorization");
+                allowedHeaders.add("X-Custom-Header");
+                response.setAccessControlAllowHeaders(allowedHeaders);
+               
                 // Handle HTTP methods
 
                 if (org.restlet.data.Method.OPTIONS.equals(request.getMethod())) {
@@ -86,22 +95,3 @@ public class FirstStepsApplication extends Application {
 
 
 }
-
-        // // Configurar CorsService para permitir solicitudes desde http://localhost:4200
-        // CorsService corsService = new CorsService();
-        // corsService.setAllowingAllRequestedHeaders(true);
-        // corsService.setAllowedOrigins( new HashSet(Arrays.asList("*")));
-        // corsService.setAllowedCredentials(true);
-        // corsService.setDefaultAllowedMethods(new HashSet<>(Arrays.asList(Method.OPTIONS,Method.GET)));
-        // corsService.setSkippingResourceForCorsOptions(true);
-
-        // // Crear el filtro CorsFilter y adjuntarlo al enrutador
-        // CorsFilter corsFilter = new CorsFilter(getContext(), router);
-        // corsFilter.setAllowingAllRequestedHeaders(true);
-        // corsFilter.setAllowedOrigins( new HashSet(Arrays.asList("*")));
-        // corsFilter.setAllowedCredentials(true);
-        // corsFilter.setDefaultAllowedMethods(new HashSet<>(Arrays.asList(Method.OPTIONS,Method.GET)));
-        // corsFilter.setSkippingResourceForCorsOptions(true);
-        // corsFilter.setAllowedOrigins(new HashSet(Arrays.asList("http://localhost:4200")));
-        
-        //return corsFilter;
