@@ -9,9 +9,7 @@ import org.bson.Document;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Get;
-import org.restlet.resource.Options;
 import org.restlet.resource.ServerResource;
-import org.restlet.data.Status;
 
 public class SearchForParameters extends ServerResource {
 

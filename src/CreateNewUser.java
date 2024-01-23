@@ -1,6 +1,10 @@
 import org.restlet.representation.Representation;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
+
+import com.mongodb.MongoException;
+
 import org.bson.Document;
 import org.restlet.representation.StringRepresentation;
 import java.security.MessageDigest;
@@ -49,6 +53,21 @@ public class CreateNewUser extends ServerResource {
         } catch (Exception e) {
             e.printStackTrace();
             return new StringRepresentation("Error al crear el nuevo usuario");
+        }
+    }
+
+    @Delete("json")
+        public StringRepresentation eliminarUsuario() {
+        // Eliminar la actividad por su título
+        try {
+            String user = getQueryValue("user");
+            MongoDBManager connector = new MongoDBManager("base_prueba_v0", "UsersApi");
+            System.out.println("USUARIO A ELIMINAR --> " + user);
+            connector.deleteDocumentUsers(user);
+            
+            return new StringRepresentation ("Usuario eliminado con éxito.");
+        } catch (MongoException e) {
+            return new StringRepresentation ("Error al eliminar el Usuario.");
         }
     }
 

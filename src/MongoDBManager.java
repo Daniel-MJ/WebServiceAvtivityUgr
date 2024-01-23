@@ -96,6 +96,22 @@ public class MongoDBManager {
         }
     }
 
+    public void deleteDocumentUsers(String user) {
+        System.out.println("USUARIO A ELIMINAR: " + user);
+        Bson query = eq("username", user);
+        Document document = collection.find(query).first();
+        ObjectId documentId = document.getObjectId("_id");
+        try {
+            Bson query1= eq("_id", documentId);
+            // Eliminar un documento por ID
+            DeleteResult result =collection.deleteOne(query1);
+        
+            System.out.println("Deleted document count: " + result.getDeletedCount());
+        } catch (MongoException me) {
+            System.err.println("Unable to delete due to an error: " + me);
+        }
+    }
+
     public void closeConnection() {
         // Cerrar la conexión de MongoDB
         if (mongoClient != null) {

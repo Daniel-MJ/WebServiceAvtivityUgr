@@ -58,7 +58,7 @@ public class FirstStepsApplication extends Application {
                
                 // Handle HTTP methods
 
-                if (org.restlet.data.Method.OPTIONS.equals(request.getMethod())) {
+                if (Method.OPTIONS.equals(request.getMethod())) {
                     return Filter.STOP;
                 }
                 return super.beforeHandle(request, response);
