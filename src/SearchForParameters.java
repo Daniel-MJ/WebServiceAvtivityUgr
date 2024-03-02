@@ -103,6 +103,24 @@ public class SearchForParameters extends ServerResource {
                 // Retorna una representación de la cadena JSON
                 return new StringRepresentation(jsonResponseCat);
 
+            case "All":
+
+                List<Document> todasActividades = buscarTodasActividades();
+
+                // Convierte los documentos a cadenas usando document.toString()
+                List<String> todasActividadesJson = new ArrayList<>();
+
+                for (Document document : todasActividades) {
+                    String json = document.toJson();
+                    todasActividadesJson.add(json);
+                }
+                
+                // Convierte la lista de cadenas JSON a una sola cadena JSON
+                String jsonResponseAll = "[" + String.join(",", todasActividadesJson) + "]";
+
+                // Retorna una representación de la cadena JSON
+                return new StringRepresentation(jsonResponseAll);
+
             default:
                 return new StringRepresentation("Ruta no manejada" + metodo);
         }
@@ -148,6 +166,15 @@ public class SearchForParameters extends ServerResource {
                     return categorias != null && categorias.contains(categoria);
                 })
                 .collect(Collectors.toList());
+    }
+
+    private List<Document> buscarTodasActividades() {
+        // Realizar la búsqueda en la colección de MongoDB por categoría
+        MongoDBManager connector = new MongoDBManager("base_prueba_v0", "Actividades");
+        List<Document> todasLasActividades = connector.getAllDocuments();
+    
+        // Filtrar las actividades que contengan la categoría
+        return todasLasActividades;
     }
     
 }
