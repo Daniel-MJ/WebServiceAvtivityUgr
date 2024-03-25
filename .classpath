@@ -14,5 +14,9 @@
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/jackson-databind-2.15.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/jackson-core-2.15.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/danie/Documents/Eclipse/ServerWebV0/lib/jackson-annotations-2.15.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danie/Documents/Repo/WebServiceAvtivityUgr/lib/jjwt-api-0.12.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danie/Documents/Repo/WebServiceAvtivityUgr/lib/jjwt-impl-0.12.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danie/Documents/Repo/WebServiceAvtivityUgr/lib/jjwt-jackson-0.12.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danie/Documents/Repo/WebServiceAvtivityUgr/lib/json-20240303.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

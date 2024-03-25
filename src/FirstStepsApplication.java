@@ -82,14 +82,31 @@ public class FirstStepsApplication extends Application {
         router.attach("/searchActivities", SearchForParameters.class);
         router.attach("/createUser", CreateNewUser.class);
         router.attach("/manageActivities", ManageActivities.class);
+        router.attach("/login", AuthenticationController.class);
 
     
         // Crear el filtro de autenticación ChallengeAuthenticator
         authenticator.setVerifier(new VerificadorUsuarios());
         authenticator.setNext(router);
+        createCorsFilter(authenticator);
         
+            // Create a specific filter for the /login route to bypass authentication
+        Filter loginFilter = new Filter(getContext(), router) {
+            @Override
+            protected int beforeHandle(Request request, Response response) {
+                if (request.getResourceRef().getPath().equals("/login")) {
+                    return CONTINUE;
+                } else {
+                    return super.beforeHandle(request, response);
+                }
+            }
+        };
+
+        return loginFilter;
+
+
         // return optionsFilter;
-        return createCorsFilter(authenticator);
+        //return createCorsFilter(authenticator);
 
     }
 
