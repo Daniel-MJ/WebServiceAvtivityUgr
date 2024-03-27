@@ -12,6 +12,7 @@ import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.data.Header;
 import org.restlet.data.Method;
+import org.restlet.data.Status;
 
 
 
@@ -78,15 +79,13 @@ public class ServerWeb extends Application {
         router.attach("/createUser", CreateNewUser.class);
         router.attach("/manageActivities", ManageActivities.class);
         router.attach("/login", AuthenticationController.class);
-        //Filter corsFilter = createCorsFilter(router);
-        // Crear el filtro de autenticación ChallengeAuthenticator
-        ChallengeAuthenticator authenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_OAUTH_BEARER, "Área protegida de la aplicación");
-        authenticator.setVerifier(new JwtVerifier());
-        authenticator.setNext(router);
-        // Create a filter to bypass authentication for the "/login" route
+        createCorsFilter(router);
+        // Intercepta todas las solicitudes
+        // Crear un filtro para verificar el token JWT
+        JwtVerifierAuth jwtVerifierAuth = new JwtVerifierAuth(getContext(), router);
         
         // Return the CORS filter
-        return createCorsFilter(authenticator);
+        return jwtVerifierAuth;
     }
     
 }
