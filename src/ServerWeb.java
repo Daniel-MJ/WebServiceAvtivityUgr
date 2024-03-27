@@ -80,39 +80,13 @@ public class ServerWeb extends Application {
         router.attach("/login", AuthenticationController.class);
         //Filter corsFilter = createCorsFilter(router);
         // Crear el filtro de autenticación ChallengeAuthenticator
-        ChallengeAuthenticator authenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Área protegida de la aplicación");
-        authenticator.setVerifier(new VerificadorUsuarios());
+        ChallengeAuthenticator authenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_OAUTH_BEARER, "Área protegida de la aplicación");
+        authenticator.setVerifier(new JwtVerifier());
         authenticator.setNext(router);
-        Filter corsFilter = createCorsFilter(authenticator);
         // Create a filter to bypass authentication for the "/login" route
         
-        // Crear el filtro CORS
-        loginCorsFilter(corsFilter);
-    
         // Return the CORS filter
-        return loginCorsFilter(corsFilter);
+        return createCorsFilter(authenticator);
     }
     
-    // Método para crear un filtro CORS
-    private Filter loginCorsFilter(Restlet next) {
-        Filter corsFilter = new Filter(getContext(), next) {
-            @Override
-            protected int beforeHandle(Request request, Response response) {
-                // Verificar si la solicitud es para "/login"
-                System.out.println(Request.getCurrent());
-                 if ("/ApiServerWeb/login".equals(Request.getCurrent().toString())) {
-                    // Si es para "/login", no aplicar autenticación
-                    return CONTINUE;
-                } else {
-                    // Si no es para "/login", aplicar autenticación
-                    return super.beforeHandle(request, response);
-                }
-            }
-        };
-        return corsFilter;
-    }
-
-
-
-
 }
