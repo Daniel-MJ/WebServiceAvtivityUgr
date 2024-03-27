@@ -25,7 +25,8 @@ public class ExampleRestlet {
 	    //component.getServers().add(Protocol.HTTP, 8182);  
 
 	    // Attach the sample application.  
-	    component.getDefaultHost().attach("/ApiServerWeb", new FirstStepsApplication());
+	    component.getDefaultHost().attach("/ApiServerWeb", new ServerWeb());
+		component.getDefaultHost().attach("/LoginApi", new LoginWeb());
 	    // Start the component.  
 	    component.start();  
 		//new ClientResource("http://restlet.com").get().write(System.out);
