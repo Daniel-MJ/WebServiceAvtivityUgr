@@ -1,6 +1,5 @@
 
 import java.util.HashSet;
-
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.data.ChallengeScheme;
@@ -16,7 +15,7 @@ import org.restlet.data.Method;
 
 
 
-public class FirstStepsApplication extends Application {
+public class ServerWeb extends Application {
 
     private Filter createCorsFilter(Restlet next) {
         Filter filter = new Filter(getContext(), next) {
@@ -67,48 +66,53 @@ public class FirstStepsApplication extends Application {
         };
         return filter;
     }
-    /**
-     * Creates a root Restlet that will receive all incoming calls.
-     */
 
     @Override
     public synchronized Restlet createInboundRoot() {
         // Create a router Restlet that routes each call to a new instance of HelloWorldResource.
         Router router = new Router(getContext());
-        ChallengeAuthenticator authenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Área protegida de la aplicación");
-        
-        // Defines only one route
+    
+        // Define routes
         router.attach("/mongodb", MongoAllDocument.class);
         router.attach("/searchActivities", SearchForParameters.class);
         router.attach("/createUser", CreateNewUser.class);
         router.attach("/manageActivities", ManageActivities.class);
         router.attach("/login", AuthenticationController.class);
-
-    
+        //Filter corsFilter = createCorsFilter(router);
         // Crear el filtro de autenticación ChallengeAuthenticator
+        ChallengeAuthenticator authenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Área protegida de la aplicación");
         authenticator.setVerifier(new VerificadorUsuarios());
         authenticator.setNext(router);
-        createCorsFilter(authenticator);
+        Filter corsFilter = createCorsFilter(authenticator);
+        // Create a filter to bypass authentication for the "/login" route
         
-            // Create a specific filter for the /login route to bypass authentication
-        Filter loginFilter = new Filter(getContext(), router) {
+        // Crear el filtro CORS
+        loginCorsFilter(corsFilter);
+    
+        // Return the CORS filter
+        return loginCorsFilter(corsFilter);
+    }
+    
+    // Método para crear un filtro CORS
+    private Filter loginCorsFilter(Restlet next) {
+        Filter corsFilter = new Filter(getContext(), next) {
             @Override
             protected int beforeHandle(Request request, Response response) {
-                if (request.getResourceRef().getPath().equals("/login")) {
+                // Verificar si la solicitud es para "/login"
+                System.out.println(Request.getCurrent());
+                 if ("/ApiServerWeb/login".equals(Request.getCurrent().toString())) {
+                    // Si es para "/login", no aplicar autenticación
                     return CONTINUE;
                 } else {
+                    // Si no es para "/login", aplicar autenticación
                     return super.beforeHandle(request, response);
                 }
             }
         };
-
-        return loginFilter;
-
-
-        // return optionsFilter;
-        //return createCorsFilter(authenticator);
-
+        return corsFilter;
     }
+
+
 
 
 }

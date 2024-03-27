@@ -19,7 +19,7 @@ public class VerificadorUsuarios extends MapVerifier {
         if(Request.getCurrent() != null){
             System.out.println("TIPO DE SOLICITUD -->"  + Request.getCurrent().getMethod());
         }
-        System.out.println("PASA POR VERIFICADOR.");
+        System.out.println("PASA POR VERIFICADOR." + Request.getCurrent());
         // Obtener las credenciales desde la base de datos y almacenarlas en getLocalSecrets
         cargarCredencialesDesdeMongo();
 

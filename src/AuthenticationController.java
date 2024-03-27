@@ -1,22 +1,36 @@
-//import org.restlet.data.Form;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 import org.restlet.security.Verifier;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-//import javax.crypto.SecretKey;
+import java.util.Date;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.bson.Document;
-import java.security.Key;
-//import org.json.JSONObject;
 
 public class AuthenticationController extends ServerResource {
 
-    // Clave secreta para firmar el token JWT
-    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    // Generar una clave secreta aleatoria para HMAC SHA-256
+    private static SecretKey generateSecretKey() {
+        try {
+            SecureRandom secureRandom = SecureRandom.getInstanceStrong();
+            byte[] keyBytes = new byte[32]; // Longitud de la clave en bytes para HMAC SHA-256
+            secureRandom.nextBytes(keyBytes);
+            return new SecretKeySpec(keyBytes, "HmacSHA256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            // Manejar la excepción adecuadamente (por ejemplo, lanzar una excepción personalizada o retornar null)
+            return null;
+        }
+    }
+    // Usar la clave generada
+    private static final SecretKey SECRET_KEY = generateSecretKey();
     //clave_secreta_para_firmar_el_token_jwt
     @Post("json")
     public Representation authenticateUser(StringRepresentation representation) {
@@ -44,11 +58,14 @@ public class AuthenticationController extends ServerResource {
     }
 
     private String generateJwtToken(String username) {
+        // Obtener la fecha actual y sumarle 1 hora
+        Date expirationDate = new Date(System.currentTimeMillis() + 3600 * 1000); // 1 hora en milisegundos
         // Generar una clave secreta con la que se firmará el token
 
         // Construir el token JWT con el nombre de usuario como sujeto
         String jwtToken = Jwts.builder()
                 .claim("sub", username)
+                .setExpiration(expirationDate)
                 .signWith(SECRET_KEY)
                 .compact();
 
