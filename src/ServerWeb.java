@@ -79,13 +79,13 @@ public class ServerWeb extends Application {
         router.attach("/createUser", CreateNewUser.class);
         router.attach("/manageActivities", ManageActivities.class);
         router.attach("/login", AuthenticationController.class);
-        createCorsFilter(router);
+        //createCorsFilter(router);
         // Intercepta todas las solicitudes
         // Crear un filtro para verificar el token JWT
         JwtVerifierAuth jwtVerifierAuth = new JwtVerifierAuth(getContext(), router);
         
         // Return the CORS filter
-        return jwtVerifierAuth;
+        return createCorsFilter(jwtVerifierAuth);
     }
     
 }
