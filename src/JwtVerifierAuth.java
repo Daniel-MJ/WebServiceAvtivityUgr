@@ -3,10 +3,9 @@ import org.restlet.Context;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
-import org.restlet.data.Method;
 import org.restlet.data.Status;
 import org.restlet.routing.Router;
-import org.restlet.routing.Template;
+
 
 public class JwtVerifierAuth extends Restlet {
 
